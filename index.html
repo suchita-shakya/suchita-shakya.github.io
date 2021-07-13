@@ -7,6 +7,8 @@
         .main {
             text-align: center;
         }
+        
+        
     </style>
 </head>
 <body>
@@ -17,14 +19,15 @@
     <p id="bio"></p>
     <h5 id="followers"></h5>
     <p> Check me on <a id="githubLink">Github</a>.</p>
+    
+    <div id="repoContainer">
+        <h3>My Projects</h3>
+        <p id="repos"></p>
 
-    <h3>My Projects</h3>
-    <ol>
-        <li id="repos"></li>
-
-    </ol>
-
+    </div>
+ 
 </div>
+
 <script>
     fetch("https://api.github.com/users/suchita-shakya")
     .then(response=>response.json())
@@ -42,26 +45,24 @@
         .then(response=>response.json())
         .then(function(repoData){
             console.log(repoData)
-            for (let i in repoData) {
-                document.getElementById('repos').textContent=`${repoData[i].name}`
-                console.log(`${repoData[i].name}`)
 
-            }
-
-            /*repoData.forEach((repo) => {
-                repolist = `${repo.name}`
-                console.log(repolist)
-                
-                document.getElementById('repos').textContent=repolist
-                
-            });*/
+            let count = repoData.length;
+            console.log(count);
+            let repoList = "";
+            for(i = 0;i <count; i++ )
+                {
+                    repoName = repoData[i]['name'];
+                    console.log(repoName);
+                    repoList += (i+1)+". "+ repoName+"<br>";
+                    document.getElementById('repos').innerHTML = repoList
+                }
+            
 
         })
         document.getElementById('mainContainer').hidden=false
         document.getElementById('loading').hidden=true
     })
 </script>
-
 
 </body>
 </html>
